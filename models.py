@@ -32,27 +32,31 @@ def create_scatter(data):
     plt.close()
  
     return url
-
-def insert(con, title, data, img):
-    """ INSERT処理 """
-    cur = con.cursor()
-    cur.execute('insert into results (title, data, img) values (?, ?, ?)', [title, data, img])
-
-    pk = cur.lastrowid
-    con.commit()
-    
-    return pk
-
-def select(con, pk):
-    """ 指定したキーのデータをSELECTする """
-    cur = con.execute('select id, title, data, img, created from results where id=?', (pk,))
-    return cur.fetchone()
-
+ 
+ 
 def select_all(con):
     """ SELECTする """
     cur = con.execute('select id, title, data, img, created from results order by id desc')
     return cur.fetchall()
-
+ 
+ 
+def select(con, pk):
+    """ 指定したキーのデータをSELECTする """
+    cur = con.execute('select id, title, data, img, created from results where id=?', (pk,))
+    return cur.fetchone()
+ 
+ 
+def insert(con, title, data, img):
+    """ INSERTする """
+    cur = con.cursor()
+    cur.execute('insert into results (title, data, img) values (?, ?, ?)', [title, data, img])
+ 
+    pk = cur.lastrowid
+    con.commit()
+ 
+    return pk
+ 
+ 
 def delete(con, pk):
     """ 指定したキーのデータをDELETEする """
     cur = con.cursor()
